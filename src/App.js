@@ -41,7 +41,7 @@ function App() {
       const data = await res.json();
       if (data.success) {
         setText("");
-        fetchTasks();
+        setTasks([...tasks, data.data]); // update locally, no refetch
       } else {
         setError(data.error);
       }
@@ -51,13 +51,17 @@ function App() {
   };
 
   const toggleTask = async (id) => {
+    // Update locally first (instant, no flicker)
+    setTasks(tasks.map(task =>
+      task._id === id ? { ...task, completed: !task.completed } : task
+    ));
+    // Sync with backend silently
     await fetch(`${API}/${id}/toggle`, { method: "PATCH" });
-    fetchTasks();
   };
 
   const clearCompleted = async () => {
+    setTasks(tasks.filter(task => !task.completed)); // update locally, no refetch
     await fetch(`${API}/completed`, { method: "DELETE" });
-    fetchTasks();
   };
 
   const filteredTasks = tasks.filter((task) => {
