@@ -6,6 +6,7 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding: 40px 16px;
 }
 
@@ -16,7 +17,7 @@ body {
   width: 100%;
   max-width: 600px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  height: fit-content;
+  min-height: 500px; /* fixed height */
 }
 
 h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
@@ -29,6 +30,7 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
   font-size: 13px;
   color: #555;
   margin-bottom: 20px;
+  min-height: 40px; /* prevents quote from shifting layout */
 }
 
 .error {
@@ -38,6 +40,7 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
   border-radius: 6px;
   margin-bottom: 12px;
   font-size: 14px;
+  min-height: 40px;
 }
 
 .input-row {
@@ -82,6 +85,8 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
   gap: 8px;
   margin-bottom: 16px;
   flex-wrap: wrap;
+  min-height: 40px; /* prevents filter row from shifting */
+  align-items: center;
 }
 
 .filters button {
@@ -107,7 +112,12 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
 
 .btn-clear:hover { background: #fff0f0 !important; }
 
-.task-list { display: flex; flex-direction: column; gap: 8px; }
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 200px; /* prevents layout shift when tasks load */
+}
 
 .task-item {
   display: flex;
@@ -117,10 +127,10 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
   border-radius: 8px;
   border: 1px solid #eee;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s; /* removed transform to prevent layout shift */
 }
 
-.task-item:hover { transform: translateX(4px); }
+.task-item:hover { background: #f8f9ff; } /* hover effect without layout shift */
 
 .task-item.completed .task-text {
   text-decoration: line-through;
@@ -137,6 +147,7 @@ h1 { font-size: 24px; margin-bottom: 16px; color: #1a1a2e; }
   border-radius: 12px;
   background: #f0f2f5;
   color: #555;
+  white-space: nowrap; /* prevents badge from wrapping */
 }
 
 .empty {
